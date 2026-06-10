@@ -28,6 +28,23 @@ export default function Skills() {
           </p>
         </div>
 
+        <div className={styles.carouselWrap}>
+          <div className={styles.grid} ref={trackRef} role="list">
+            {SKILLS.map((skill, index) => (
+              <div
+                key={skill.id}
+                className={`reveal ${styles.skillCell}`}
+                style={{ transitionDelay: `${index * 90}ms` }}
+                role="listitem"
+              >
+                <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span>
+                <SkillIcon id={skill.id} />
+                <span className={styles.skillName}>{skill.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className={styles.controlsMobileOnly}>
           <div className={styles.carouselNav} aria-label="Card navigation">
             <button
@@ -46,23 +63,6 @@ export default function Skills() {
             >
               <ArrowRight size={16} />
             </button>
-          </div>
-        </div>
-
-        <div className={styles.carouselWrap}>
-          <div className={styles.grid} ref={trackRef} role="list">
-            {SKILLS.map((skill, index) => (
-              <div
-                key={skill.id}
-                className={`reveal ${styles.skillCell}`}
-                style={{ transitionDelay: `${index * 90}ms` }}
-                role="listitem"
-              >
-                <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span>
-                <SkillIcon id={skill.id} />
-                <span className={styles.skillName}>{skill.label}</span>
-              </div>
-            ))}
           </div>
         </div>
       </div>

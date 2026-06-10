@@ -27,27 +27,6 @@ export default function WhyMe() {
           </p>
         </div>
 
-        <div className={styles.controlsMobileOnly}>
-          <div className={styles.carouselNav} aria-label="Card navigation">
-            <button
-              type="button"
-              className={styles.arrowBtn}
-              onClick={() => scrollTrack(-1)}
-              aria-label="Previous"
-            >
-              <ArrowLeft size={16} />
-            </button>
-            <button
-              type="button"
-              className={styles.arrowBtn}
-              onClick={() => scrollTrack(1)}
-              aria-label="Next"
-            >
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-
         <div className={styles.carouselWrap}>
           <div className={styles.grid} ref={trackRef} role="list">
             {VALUE_POINTS.map((point, index) => (
@@ -68,8 +47,28 @@ export default function WhyMe() {
             ))}
           </div>
         </div>
+
+        <div className={styles.controlsMobileOnly}>
+          <div className={styles.carouselNav} aria-label="Card navigation">
+            <button
+              type="button"
+              className={styles.arrowBtn}
+              onClick={() => scrollTrack(-1)}
+              aria-label="Previous"
+            >
+              <ArrowLeft size={16} />
+            </button>
+            <button
+              type="button"
+              className={styles.arrowBtn}
+              onClick={() => scrollTrack(1)}
+              aria-label="Next"
+            >
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   )
 }
-

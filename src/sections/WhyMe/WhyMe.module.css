@@ -88,7 +88,7 @@
   .controlsMobileOnly {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: var(--space-6);
+    margin-top: var(--space-6);
   }
 
   .carouselNav {
