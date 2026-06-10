@@ -29,7 +29,7 @@ export default function WhyMe() {
 
         </div>
 
-        <div className={`${styles.controls} reveal`}>
+        <div className={styles.controls}>
           <div className={styles.carouselNav} aria-label="Card navigation">
             <button
               type="button"

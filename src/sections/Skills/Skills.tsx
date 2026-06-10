@@ -30,7 +30,7 @@ export default function Skills() {
 
         </div>
 
-        <div className={`${styles.controls} reveal`}>
+        <div className={styles.controls}>
           <div className={styles.carouselNav} aria-label="Card navigation">
             <button
               type="button"
