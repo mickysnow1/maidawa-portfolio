@@ -8,6 +8,7 @@ export default function Projects() {
   const [active, setActive] = useUrlParam('work', 'All', ALL_NICHES)
   const trackRef = useRef<HTMLDivElement>(null)
   const [lightbox, setLightbox] = useState<{ type: 'video' | 'image'; url: string } | null>(null)
+  const [comingSoon, setComingSoon] = useState(false)
 
   const filtered = active === 'All'
     ? PROJECTS
@@ -81,7 +82,7 @@ export default function Projects() {
         <div className={styles.carouselWrap}>
           <div className={styles.grid} ref={trackRef} role="list">
             {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} onOpenLightbox={setLightbox} />
+              <ProjectCard key={project.id} project={project} index={i} onOpenLightbox={setLightbox} onOpenComingSoon={() => setComingSoon(true)} />
             ))}
           </div>
         </div>
@@ -104,11 +105,28 @@ export default function Projects() {
           </div>
         </div>
       )}
+
+      {comingSoon && (
+        <div className={styles.lightboxOverlay} onClick={() => setComingSoon(false)}>
+          <button className={styles.lightboxClose} onClick={() => setComingSoon(false)} aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <div className={styles.comingSoonModal} onClick={e => e.stopPropagation()}>
+            <div className={styles.comingSoonIcon}>🚧</div>
+            <h3>Coming Soon</h3>
+            <p>This project is currently being finalized and will be available shortly.</p>
+            <button className={styles.comingSoonBtn} onClick={() => setComingSoon(false)}>Got it</button>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
 
-function ProjectCard({ project, index, onOpenLightbox }: { project: Project; index: number; onOpenLightbox: (data: { type: 'video'|'image'; url: string }) => void }) {
+function ProjectCard({ project, index, onOpenLightbox, onOpenComingSoon }: { project: Project; index: number; onOpenLightbox: (data: { type: 'video'|'image'; url: string }) => void; onOpenComingSoon: () => void }) {
   const [hovered, setHovered] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const showVideo = Boolean(project.videoUrl && hovered)
@@ -193,10 +211,26 @@ function ProjectCard({ project, index, onOpenLightbox }: { project: Project; ind
               <ProjectAction
                 label="Live Demo"
                 href={project.liveUrl}
-                onDemoClick={project.liveUrl?.startsWith('/projects/') ? handleLiveDemo : undefined}
+                onDemoClick={
+                  project.liveUrl?.startsWith('/projects/')
+                    ? handleLiveDemo
+                    : project.liveUrl === '#coming-soon'
+                    ? (e) => { e.preventDefault(); onOpenComingSoon(); }
+                    : undefined
+                }
               />
-              {project.figmaUrl && <ProjectAction href={project.figmaUrl} label="Figma" />}
-              <ProjectAction href={project.codeUrl} label="GitHub" />
+              {project.figmaUrl && (
+                <ProjectAction 
+                  href={project.figmaUrl} 
+                  label="Figma" 
+                  onDemoClick={project.figmaUrl === '#coming-soon' ? (e) => { e.preventDefault(); onOpenComingSoon(); } : undefined} 
+                />
+              )}
+              <ProjectAction 
+                href={project.codeUrl} 
+                label="GitHub" 
+                onDemoClick={project.codeUrl === '#coming-soon' ? (e) => { e.preventDefault(); onOpenComingSoon(); } : undefined} 
+              />
             </div>
           </div>
         </div>
