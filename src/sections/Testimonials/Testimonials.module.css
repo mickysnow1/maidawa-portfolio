@@ -27,112 +27,81 @@
   color: var(--color-text-primary);
 }
 
-.tabsContainer {
-  display: flex;
-  flex-direction: column;
+.controls {
+  display: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-6);
   width: 100%;
 }
 
-/* Tablist / Proof Bar */
-.tablist {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.card {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
-  background-color: var(--color-bg);
+  padding: clamp(var(--space-6), 4vw, var(--space-8));
+  background-color: var(--color-card);
   box-shadow: var(--shadow-sm); 
-}
-
-.tab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: var(--space-6);
-  background-color: transparent;
-  border: none;
-  border-right: 1px solid var(--color-border);
-  cursor: pointer;
-  text-align: left;
-  transition: background-color 0.2s ease;
-}
-
-.tab:last-child {
-  border-right: none;
-}
-
-.tab:hover {
-  background-color: var(--color-portfolio-surface);
-}
-
-.tab:hover .tabIcon {
-  transform: scale(1.05);
-}
-
-.activeTab {
-  background-color: var(--color-card);
-}
-
-.tabIcon {
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-3);
-  opacity: 0.8;
-  transition: transform 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-}
-
-.tab:hover .tabIcon,
-.activeTab .tabIcon {
-  color: var(--icon-hover-color, var(--color-text-primary));
-  opacity: 1;
-}
-
-.tabClientName {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  line-height: var(--lh-tight);
-  margin-bottom: 2px;
-}
-
-.tabProjectLabel {
-  font-size: var(--text-base);
-  color: var(--color-text-muted);
-  line-height: var(--lh-tight);
-}
-
-/* Detail Panel */
-.tabpanel {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: clamp(var(--space-6), 4vw, var(--space-10));
-  min-height: 220px;
-  background-color: var(--color-card);
-  box-shadow: var(--shadow-md); 
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tabpanelInner {
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  position: relative;
+  z-index: 1;
+}
+
+.cardIcon {
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  transition: transform 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.card:hover .cardIcon {
+  color: var(--icon-hover-color, var(--color-text-primary));
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.cardMeta {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-6);
-  height: 100%;
-  flex: 1;
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.clientName {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: var(--lh-tight);
+}
+
+.projectLabel {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
 }
 
 .quoteBg {
   position: absolute;
-  top: -20px;
-  left: 10px;
-  font-size: 160px;
+  top: 40px;
+  right: 10px;
+  font-size: 140px;
   font-family: var(--font-serif);
   color: var(--color-border);
-  opacity: 0.4;
+  opacity: 0.2;
   line-height: 1;
   pointer-events: none;
   z-index: 0;
@@ -140,34 +109,37 @@
 }
 
 .quote {
-  font-size: clamp(1.1rem, 1vw + 1rem, 1.25rem);
+  font-size: var(--text-base);
   font-weight: 400;
   color: var(--color-text-primary);
   line-height: 1.6;
   position: relative;
   z-index: 1;
+  flex-grow: 1;
+  margin-bottom: var(--space-6);
 }
 
 .panelFooter {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: var(--space-4);
   gap: var(--space-4);
   flex-wrap: wrap;
   position: relative;
   z-index: 1;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
 
 .authorGroup {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-color: var(--color-text-primary);
   color: var(--color-bg);
@@ -175,7 +147,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .authorText {
@@ -185,55 +157,82 @@
 }
 
 .author {
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
 .roleContext {
-  font-size: var(--text-sm);
+  font-size: 0.75rem;
   color: var(--color-text-secondary);
 }
 
 .badge {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: #1a5e20;
   background-color: #e8f5e9;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 9999px;
   white-space: nowrap;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@media (max-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Mobile adjustments */
-@media (max-width: 480px) {
-  .tablist {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, auto);
+@media (max-width: 48rem) {
+  .controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--space-6);
   }
 
-  .tab {
-    border-right: none;
-    border-bottom: 1px solid var(--color-border);
+  .carouselNav {
+    display: flex;
+    gap: var(--space-3);
   }
 
-  .tab:last-child {
-    border-bottom: none;
+  .arrowBtn {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow var(--duration-base) var(--ease-o6), transform var(--duration-base) var(--ease-o6);
   }
-  
-  .avatar {
-    width: 36px;
-    height: 36px;
+
+  .arrowBtn:active {
+    transform: scale(0.95);
+  }
+
+  .carouselWrap {
+    overflow: hidden;
+    margin-inline: calc(-1 * var(--space-4));
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .grid {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    flex: 0 0 min(22rem, 85vw);
+    scroll-snap-align: start;
   }
 }
