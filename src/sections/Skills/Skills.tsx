@@ -28,9 +28,7 @@ export default function Skills() {
           </p>
         </div>
 
-        </div>
-
-        <div className={styles.controls}>
+        <div className={styles.controlsMobileOnly}>
           <div className={styles.carouselNav} aria-label="Card navigation">
             <button
               type="button"
