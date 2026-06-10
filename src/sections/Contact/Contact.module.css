@@ -156,7 +156,7 @@
 .fieldLabel {
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  color: rgba(244, 243, 239, 0.4);
+  color: rgba(244, 243, 239, 0.85);
   text-transform: uppercase;
   letter-spacing: var(--ls-widest);
 }
@@ -175,7 +175,7 @@
 }
 
 .input::placeholder {
-  color: rgba(244, 243, 239, 0.25);
+  color: rgba(244, 243, 239, 0.45);
   font-size: var(--text-sm);
 }
 
