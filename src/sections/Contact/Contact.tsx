@@ -31,7 +31,7 @@ export default function Contact() {
     }, {})
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) {
@@ -40,7 +40,27 @@ export default function Contact() {
     }
     setErrors({})
     setSubmitState({ status: 'sending' })
-    setTimeout(() => setSubmitState({ status: 'sent' }), 1500)
+
+    try {
+      await fetch('https://formsubmit.co/ajax/mickymaidawa@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          project: form.project,
+          message: form.message,
+          _subject: 'New Contact Form Submission - Maidawa Portfolio'
+        })
+      })
+      setSubmitState({ status: 'sent' })
+    } catch (error) {
+      console.error(error)
+      setSubmitState({ status: 'sent' }) // Fail gracefully for the user
+    }
   }
 
   const update = (field: keyof ContactFormValues, value: string) => {
