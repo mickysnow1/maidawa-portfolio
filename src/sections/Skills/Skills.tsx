@@ -1,7 +1,19 @@
+import { useCallback, useRef } from 'react'
 import styles from './Skills.module.css'
 import { SKILLS } from './skillsData'
+import { ArrowLeft, ArrowRight } from '../../components/Icon/Icons'
 
 export default function Skills() {
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  const scrollTrack = useCallback((direction: -1 | 1) => {
+    const track = trackRef.current
+    if (!track) return
+    track.scrollBy({
+      left: direction * track.clientWidth * 0.86,
+      behavior: 'smooth',
+    })
+  }, [])
   return (
     <section id="skills" className={styles.section} aria-labelledby="skills-heading">
       <div className="container">
@@ -16,19 +28,44 @@ export default function Skills() {
           </p>
         </div>
 
-        <div className={styles.grid} role="list">
-          {SKILLS.map((skill, index) => (
-            <div
-              key={skill.id}
-              className={`reveal ${styles.skillCell}`}
-              style={{ transitionDelay: `${index * 90}ms` }}
-              role="listitem"
+        </div>
+
+        <div className={`${styles.controls} reveal`}>
+          <div className={styles.carouselNav} aria-label="Card navigation">
+            <button
+              type="button"
+              className={styles.arrowBtn}
+              onClick={() => scrollTrack(-1)}
+              aria-label="Previous"
             >
-              <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span>
-              <SkillIcon id={skill.id} />
-              <span className={styles.skillName}>{skill.label}</span>
-            </div>
-          ))}
+              <ArrowLeft size={16} />
+            </button>
+            <button
+              type="button"
+              className={styles.arrowBtn}
+              onClick={() => scrollTrack(1)}
+              aria-label="Next"
+            >
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.carouselWrap}>
+          <div className={styles.grid} ref={trackRef} role="list">
+            {SKILLS.map((skill, index) => (
+              <div
+                key={skill.id}
+                className={`reveal ${styles.skillCell}`}
+                style={{ transitionDelay: `${index * 90}ms` }}
+                role="listitem"
+              >
+                <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span>
+                <SkillIcon id={skill.id} />
+                <span className={styles.skillName}>{skill.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
