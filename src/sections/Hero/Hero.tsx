@@ -83,8 +83,8 @@ export default function Hero() {
                 <span>View My Projects</span>
                 <span className="btn-icon-arrow"><ArrowRight size={15} /></span>
               </a>
-              <a href="/resume.pdf" download className="btn-pill-outline">
-                <span>Download Resume</span>
+              <a href="/Michael_Maidawa_Resume.docx" download="Michael_Maidawa_Resume.docx" className="btn-pill-outline">
+                <span>Download CV</span>
               </a>
             </div>
           </div>
