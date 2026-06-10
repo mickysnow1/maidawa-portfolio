@@ -56,7 +56,7 @@ export const PROJECTS: Project[] = [
     ],
     image: '/projects/vhc-alumni.png',
     liveUrl: '/projects/vhc-alumni.png',
-    codeUrl: '#contact',
+    codeUrl: '#coming-soon',
     accentColor: '#1B4332',
     preview: 'dashboard',
   },
