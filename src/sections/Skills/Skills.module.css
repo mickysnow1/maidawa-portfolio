@@ -107,33 +107,9 @@
   color: var(--color-text-muted);
 }
 
+/* Carousel styling covers 64rem and down */
+
 @media (max-width: 64rem) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .skillCell {
-    min-height: 9rem;
-  }
-
-  .skillCell:not(:nth-child(4n + 1)) {
-    border-left: 0;
-  }
-
-  .skillCell:nth-child(n + 5) {
-    border-top: 0;
-  }
-
-  .skillCell:nth-child(even) {
-    border-left: 1px solid var(--color-border);
-  }
-
-  .skillCell:nth-child(n + 3) {
-    border-top: 1px solid var(--color-border);
-  }
-}
-
-@media (max-width: 48rem) {
   .controls {
     display: flex;
     justify-content: flex-end;

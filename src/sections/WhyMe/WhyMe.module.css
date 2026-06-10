@@ -84,7 +84,7 @@
   line-height: var(--lh-normal);
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 64rem) {
   .controls {
     display: flex;
     justify-content: flex-end;
