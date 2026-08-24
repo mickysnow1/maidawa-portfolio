@@ -259,13 +259,13 @@
   }
   
   .right {
-    order: -1; /* Image on top for tablet/mobile */
+    order: initial;
     align-self: auto;
     transform: none;
   }
   
   .visualContainer {
-    max-width: 320px;
+    max-width: 240px;
   }
 
   .statsContainer {

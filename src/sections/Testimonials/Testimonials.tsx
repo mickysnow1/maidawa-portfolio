@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import styles from './Testimonials.module.css'
 import { TESTIMONIALS } from './testimonialsData'
 import { Building, Users, Leaf } from '../../components/Icon/Icons'
@@ -96,6 +97,17 @@ export default function Testimonials() {
                   {activeTestimonial.badgeLabel}
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className={`reveal ${styles.proofRail}`}>
+            <div>
+              <p className={styles.proofLabel}>Selected feedback proof</p>
+              <p className={styles.proofCopy}>Informal messages from recent client conversations, shown as received.</p>
+            </div>
+            <div className={styles.proofImages}>
+              <Image src="/images/testimony1.jpg" alt="Client message screenshot saying nice work" width={1440} height={1323} sizes="(max-width: 480px) 100vw, 30vw" />
+              <Image src="/images/testimony2.jpg" alt="Client message screenshot praising the execution" width={1431} height={1063} sizes="(max-width: 480px) 100vw, 30vw" />
             </div>
           </div>
         </div>

@@ -311,6 +311,11 @@ button {
    SCROLL REVEAL (Ultra-Smooth Bezier reveal)
    ============================================================ */
 .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.js .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -318,7 +323,7 @@ button {
     transform var(--duration-slow) var(--ease-o6);
 }
 
-.reveal.visible {
+.js .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -331,7 +336,9 @@ button {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal {
+  .reveal,
+  .js .reveal,
+  .js .reveal.visible {
     opacity: 1;
     transform: none;
   }

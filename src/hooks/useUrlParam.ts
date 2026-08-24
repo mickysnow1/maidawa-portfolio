@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 
 export function useUrlParam<T extends string>(
   key: string,
@@ -12,16 +12,12 @@ export function useUrlParam<T extends string>(
     return allowedValues.includes(value as T) ? (value as T) : fallback
   }, [allowedValues, fallback, key])
 
-  // Start with fallback so SSR and the first client paint match (avoids hydration errors).
-  const [value, setValue] = useState<T>(fallback)
+  const subscribe = useCallback((onStoreChange: () => void) => {
+    window.addEventListener('popstate', onStoreChange)
+    return () => window.removeEventListener('popstate', onStoreChange)
+  }, [])
 
-  useEffect(() => {
-    setValue(readValue())
-
-    const onPopState = () => setValue(readValue())
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
-  }, [readValue])
+  const value = useSyncExternalStore(subscribe, readValue, () => fallback)
 
   const updateValue = useCallback((nextValue: T) => {
     if (typeof window === 'undefined') return
@@ -36,7 +32,7 @@ export function useUrlParam<T extends string>(
     const nextSearch = params.toString()
     const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ''}${window.location.hash}`
     window.history.replaceState(null, '', nextUrl)
-    setValue(nextValue)
+    window.dispatchEvent(new PopStateEvent('popstate'))
   }, [fallback, key])
 
   return [value, updateValue] as const

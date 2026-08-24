@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import styles from './Projects.module.css'
 import { PROJECTS, ALL_NICHES, type Project } from './projectsData'
 import { useUrlParam } from '../../hooks/useUrlParam'
@@ -7,8 +8,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from '../../components/Icon/Icons
 export default function Projects() {
   const [active, setActive] = useUrlParam('work', 'All', ALL_NICHES)
   const trackRef = useRef<HTMLDivElement>(null)
-  const [lightbox, setLightbox] = useState<{ type: 'video' | 'image'; url: string } | null>(null)
-  const [comingSoon, setComingSoon] = useState(false)
+  const [lightbox, setLightbox] = useState<{ type: 'video' | 'image'; url: string; title: string } | null>(null)
 
   const filtered = active === 'All'
     ? PROJECTS
@@ -35,11 +35,11 @@ export default function Projects() {
         <div className={styles.header}>
           <p className="section-label reveal">Featured Projects</p>
           <h2 id="projects-heading" className={`reveal ${styles.title}`}>
-            Featured Projects
+            Selected frontend work
           </h2>
           <p className={`reveal ${styles.sub}`}>
-            A focused selection of client and personal projects showing design-to-code
-            delivery, responsive layouts, and clean frontend implementation.
+            A small selection of frontend deliveries across career websites, admin dashboards,
+            and business marketing experiences — with real previews before you open the code.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export default function Projects() {
         <div className={styles.carouselWrap}>
           <div className={styles.grid} ref={trackRef} role="list">
             {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} onOpenLightbox={setLightbox} onOpenComingSoon={() => setComingSoon(true)} />
+              <ProjectCard key={project.id} project={project} index={i} onOpenLightbox={setLightbox} />
             ))}
           </div>
         </div>
@@ -90,35 +90,24 @@ export default function Projects() {
 
       {lightbox && (
         <div className={styles.lightboxOverlay} onClick={() => setLightbox(null)}>
-          <button className={styles.lightboxClose} onClick={() => setLightbox(null)} aria-label="Close demo">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-          <div className={styles.lightboxContent} onClick={e => e.stopPropagation()}>
+          <div
+            className={styles.lightboxContent}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${lightbox.title} preview`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className={styles.lightboxClose} onClick={() => setLightbox(null)} aria-label="Close project preview">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
             {lightbox.type === 'video' ? (
-              <video src={lightbox.url} controls autoPlay className={styles.lightboxMedia} />
+              <video src={lightbox.url} controls autoPlay className={styles.lightboxMedia} aria-label={`${lightbox.title} video preview`} />
             ) : (
-              <img src={lightbox.url} alt="Live Demo" className={styles.lightboxMedia} />
+              <img src={lightbox.url} alt={`${lightbox.title} preview`} className={styles.lightboxMedia} />
             )}
-          </div>
-        </div>
-      )}
-
-      {comingSoon && (
-        <div className={styles.lightboxOverlay} onClick={() => setComingSoon(false)}>
-          <button className={styles.lightboxClose} onClick={() => setComingSoon(false)} aria-label="Close modal">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-          <div className={styles.comingSoonModal} onClick={e => e.stopPropagation()}>
-            <div className={styles.comingSoonIcon}>🚧</div>
-            <h3>Coming Soon</h3>
-            <p>This project is currently being finalized and will be available shortly.</p>
-            <button className={styles.comingSoonBtn} onClick={() => setComingSoon(false)}>Got it</button>
           </div>
         </div>
       )}
@@ -126,28 +115,12 @@ export default function Projects() {
   )
 }
 
-function ProjectCard({ project, index, onOpenLightbox, onOpenComingSoon }: { project: Project; index: number; onOpenLightbox: (data: { type: 'video'|'image'; url: string }) => void; onOpenComingSoon: () => void }) {
-  const [hovered, setHovered] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const showVideo = Boolean(project.videoUrl && hovered)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    if (showVideo) {
-      void video.play().catch(() => {})
-    } else {
-      video.pause()
-      video.currentTime = 0
-    }
-  }, [showVideo])
-
+function ProjectCard({ project, index, onOpenLightbox }: { project: Project; index: number; onOpenLightbox: (data: { type: 'video'|'image'; url: string; title: string }) => void }) {
   const handleLiveDemo = (e: React.MouseEvent) => {
     if (project.liveUrl?.startsWith('/projects/')) {
       e.preventDefault()
       const isVideo = project.liveUrl.endsWith('.mp4')
-      onOpenLightbox({ type: isVideo ? 'video' : 'image', url: project.liveUrl })
+      onOpenLightbox({ type: isVideo ? 'video' : 'image', url: project.liveUrl, title: project.title })
     }
   }
 
@@ -157,8 +130,6 @@ function ProjectCard({ project, index, onOpenLightbox, onOpenComingSoon }: { pro
       style={{ transitionDelay: `${index * 90}ms` }}
       aria-label={`${project.title} — ${project.niche}`}
       role="listitem"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       <span
         className={styles.accentBar}
@@ -170,9 +141,6 @@ function ProjectCard({ project, index, onOpenLightbox, onOpenComingSoon }: { pro
         <ProjectMedia
           project={project}
           index={index}
-          showVideo={showVideo}
-          videoRef={videoRef}
-          hovered={hovered}
         />
       </div>
 
@@ -209,28 +177,14 @@ function ProjectCard({ project, index, onOpenLightbox, onOpenComingSoon }: { pro
 
             <div className={styles.actionWrap}>
               <ProjectAction
-                label="Live Demo"
+                label={project.demoLabel ?? 'Preview'}
                 href={project.liveUrl}
-                onDemoClick={
-                  project.liveUrl?.startsWith('/projects/')
-                    ? handleLiveDemo
-                    : project.liveUrl === '#coming-soon'
-                    ? (e) => { e.preventDefault(); onOpenComingSoon(); }
-                    : undefined
-                }
+                onDemoClick={project.liveUrl?.startsWith('/projects/') ? handleLiveDemo : undefined}
               />
               {project.figmaUrl && (
-                <ProjectAction 
-                  href={project.figmaUrl} 
-                  label="Figma" 
-                  onDemoClick={project.figmaUrl === '#coming-soon' ? (e) => { e.preventDefault(); onOpenComingSoon(); } : undefined} 
-                />
+                <ProjectAction href={project.figmaUrl} label="Figma" />
               )}
-              <ProjectAction 
-                href={project.codeUrl} 
-                label="GitHub" 
-                onDemoClick={project.codeUrl === '#coming-soon' ? (e) => { e.preventDefault(); onOpenComingSoon(); } : undefined} 
-              />
+              {project.codeUrl && <ProjectAction href={project.codeUrl} label="GitHub" />}
             </div>
           </div>
         </div>
@@ -239,66 +193,18 @@ function ProjectCard({ project, index, onOpenLightbox, onOpenComingSoon }: { pro
   )
 }
 
-function ProjectMedia({
-  project,
-  index,
-  showVideo,
-  videoRef,
-  hovered,
-}: {
-  project: Project
-  index: number
-  showVideo: boolean
-  videoRef: React.RefObject<HTMLVideoElement | null>
-  hovered: boolean
-}) {
-  // If video exists, use the poster image + video logic
-  if (project.videoUrl) {
-    return (
-      <>
-        {project.image && (
-          <img
-            src={project.image}
-            alt={`${project.title} screenshot`}
-            className={`${styles.media} ${showVideo ? styles.mediaHidden : styles.mediaVisible}`}
-            loading="lazy"
-          />
-        )}
-        <video
-          ref={videoRef}
-          src={project.videoUrl}
-          className={`${styles.media} ${showVideo ? styles.mediaVisible : styles.mediaHidden}`}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label={`${project.title} video demo`}
-        />
-      </>
-    )
-  }
-
-  // If image exists AND preview exists, cross-fade from preview to image on hover
-  if (project.image && project.preview) {
-    return (
-      <>
-        <div className={`${styles.media} ${hovered ? styles.mediaHidden : styles.mediaVisible}`}>
-          <ProjectPreview project={project} index={index} />
-        </div>
-        <img
-          src={project.image}
-          alt={`${project.title} screenshot`}
-          className={`${styles.media} ${hovered ? styles.mediaVisible : styles.mediaHidden}`}
-          loading="lazy"
-        />
-      </>
-    )
-  }
-
+function ProjectMedia({ project, index }: { project: Project; index: number }) {
   if (project.image) {
-    return <img src={project.image} alt={`${project.title} screenshot`} className={styles.media} loading="lazy" />
+    return (
+      <Image
+        src={project.image}
+        alt={`${project.title} preview`}
+        fill
+        sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) 70vw, 448px"
+        className={styles.media}
+      />
+    )
   }
-
   return <ProjectPreview project={project} index={index} />
 }
 

@@ -15,6 +15,6 @@ describe('Contact form validation', () => {
   it('exposes the direct email link', () => {
     render(<Contact />)
     const link = screen.getByLabelText(/email michael directly/i)
-    expect(link).toHaveAttribute('href', 'mailto:your@email.com')
+    expect(link).toHaveAttribute('href', 'mailto:mickymaidawa@gmail.com')
   })
 })

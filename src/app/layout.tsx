@@ -30,7 +30,7 @@ const archivoBlack = Archivo_Black({
 
 export const metadata: Metadata = {
   title: 'Michael Maidawa | Frontend Website Developer',
-  description: 'Michael Maidawa is a Frontend Website Developer specializing in React, Next.js, and web development. Hire Michael for your next digital experience.',
+  description: 'Michael Maidawa is a frontend developer available for full-time roles and freelance work, building responsive websites, dashboards, and product interfaces with React and Next.js.',
   keywords: ['frontend website developer', 'web development', 'react developer', 'next.js developer', 'michael maidawa', 'frontend developer', 'website developer'],
   authors: [{ name: 'Michael Maidawa' }],
   metadataBase: new URL('https://maidawa.studio'),
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://maidawa.studio/',
     title: 'Michael Maidawa | Frontend Website Developer',
-    description: 'Hire Michael Maidawa, a Frontend Website Developer crafting clean, responsive, user-centered digital experiences.',
+    description: 'Hire Michael Maidawa for frontend development across responsive websites, dashboards, and polished product interfaces.',
     images: [
       {
         url: '/og-image.png',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Michael Maidawa | Frontend Website Developer',
-    description: 'Hire Michael Maidawa, a Frontend Website Developer crafting clean, responsive, user-centered digital experiences.',
+    description: 'Hire Michael Maidawa for frontend development across responsive websites, dashboards, and polished product interfaces.',
     images: ['/og-image.png'],
   },
 }
@@ -71,11 +71,11 @@ const personSchema = {
   '@type': 'Person',
   name: 'Michael Maidawa',
   url: 'https://maidawa.studio/',
-  jobTitle: 'Web Developer',
-  description: 'Web Developer specialising in React, Next.js, Tailwind CSS, and Figma-to-code implementation.',
+  jobTitle: 'Frontend Developer',
+  description: 'Frontend developer specialising in React, Next.js, TypeScript, Tailwind CSS, and Figma-to-code implementation.',
   sameAs: [
-    'https://github.com/yourusername',
-    'https://linkedin.com/in/yourprofile',
+    'https://github.com/mickysnow1',
+    'https://x.com/yourafroguy',
   ],
 }
 

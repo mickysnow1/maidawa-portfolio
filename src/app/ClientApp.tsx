@@ -20,12 +20,16 @@ export default function ClientApp() {
   const [showTop, setShowTop] = useState(false)
 
   useEffect(() => {
+    document.documentElement.classList.add('js')
     const els = document.querySelectorAll('.reveal')
     const firstBatch = Array.from(els).slice(0, 4)
     const timer = setTimeout(() => {
       firstBatch.forEach((el) => el.classList.add('visible'))
     }, 150)
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      document.documentElement.classList.remove('js')
+    }
   }, [])
 
   useEffect(() => {

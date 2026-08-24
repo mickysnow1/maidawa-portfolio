@@ -65,17 +65,17 @@ export default function Hero() {
             </h1>
 
             <p className={`reveal ${styles.role}`}>
-              Web Developer
+              Frontend Developer
             </p>
 
             <p className={`reveal ${styles.subtext}`}>
-              I craft clean, responsive, and user-centered digital experiences
-              using React, Next.js, and Tailwind CSS.
+              I turn product ideas and Figma direction into clear, responsive
+              interfaces with React, Next.js, and TypeScript.
             </p>
 
             <p className={`reveal ${styles.shortBio}`}>
-              Turning Figma designs into pixel-perfect, high-quality code.
-              Passionate about building intuitive interfaces that users love.
+              Available for full-time frontend roles and freelance builds — from
+              marketing websites to dashboards and polished product interfaces.
             </p>
 
             <div className={`reveal ${styles.actionWrap}`}>
@@ -142,9 +142,9 @@ export default function Hero() {
 
         <div className={`reveal ${styles.statsSection}`}>
           <div className={styles.statsContainer}>
-            <Stat label="Years of Experience" target={5}  suffix="+" />
-            <Stat label="Projects Shipped"    target={12} suffix="+" />
-            <Stat label="Design Tokens Mapped" target={240} suffix="+" />
+            <Stat label="Years Practising" target={4} suffix="+" />
+            <Stat label="Projects Delivered" target={3} suffix="+" />
+            <Stat label="Ways to Work Together" target={2} suffix="" />
           </div>
 
           <div className={styles.disclosureWrap}>
@@ -192,11 +192,11 @@ export default function Hero() {
               </button>
             </div>
             <div className={styles.modalBody}>
-              <p><strong>Years of Experience:</strong> Verified active industry service since 2021, specialising in scalable frontend architectures and responsive systems.</p>
+              <p><strong>Frontend practice:</strong> Four years of building responsive, accessible interfaces with React, Next.js, TypeScript, and Tailwind CSS.</p>
               <br />
-              <p><strong>Projects Completed:</strong> Multi-niche production deliveries spanning high-complexity SaaS dashboards, modular marketing engines, and custom e-commerce interfaces.</p>
+              <p><strong>Selected delivery:</strong> Client and freelance work across career websites, admin dashboards, and business marketing experiences.</p>
               <br />
-              <p><strong>Design Tokens Mapped:</strong> Every shipped interface is wired to a typed token system — colour, spacing, type — never hard-coded values.</p>
+              <p><strong>Ways to work together:</strong> I am available for full-time frontend roles and freelance frontend builds.</p>
             </div>
           </div>
         </div>
@@ -211,49 +211,12 @@ interface StatProps {
   suffix?: string
 }
 
-function prefersReducedMotion() {
-  return typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
 function Stat({ label, target, suffix = '' }: StatProps) {
-  const [value, setValue] = useState(() => (prefersReducedMotion() ? target : 0))
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return
-    const node = ref.current
-    if (!node) return
-
-    let raf = 0
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry) return
-      if (!entry.isIntersecting) return
-      observer.disconnect()
-      const start = performance.now()
-      const duration = 1200
-      const tick = (now: number) => {
-        const t = Math.min((now - start) / duration, 1)
-        const eased = 1 - Math.pow(1 - t, 3)
-        setValue(Math.floor(eased * target))
-        if (t < 1) raf = requestAnimationFrame(tick)
-        else setValue(target)
-      }
-      raf = requestAnimationFrame(tick)
-    }, { threshold: 0.3 })
-
-    observer.observe(node)
-    return () => {
-      observer.disconnect()
-      cancelAnimationFrame(raf)
-    }
-  }, [target])
-
   return (
-    <div ref={ref} className={styles.statBox}>
+    <div className={styles.statBox}>
       <span className={styles.statLabel}>{label}</span>
       <span className={styles.statNumber}>
-        {value.toLocaleString()}
+        {target.toLocaleString()}
         {suffix}
       </span>
     </div>

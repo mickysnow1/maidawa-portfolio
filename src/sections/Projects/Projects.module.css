@@ -705,17 +705,6 @@
 
 .detailsWrap {
   display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  pointer-events: none;
-  transition: 
-    grid-template-rows 0.4s var(--ease-o6), 
-    opacity 0.4s var(--ease-o6),
-    margin-top 0.4s var(--ease-o6);
-}
-
-.card:hover .detailsWrap,
-.card:focus-within .detailsWrap {
   grid-template-rows: 1fr;
   opacity: 1;
   pointer-events: auto;

@@ -6,33 +6,33 @@ export interface ValuePoint {
 
 export const VALUE_POINTS: ValuePoint[] = [
   {
-    id: 'clean-code',
-    title: 'Clean, well-structured, and maintainable code',
+    id: 'design-to-code',
+    title: 'Figma direction becomes production UI',
     description:
-      'I build frontend code that is readable, organized, and easier to maintain after delivery.',
+      'I turn visual systems into responsive components that stay faithful to the design and practical in the browser.',
   },
   {
-    id: 'user-centered',
-    title: 'Strong focus on user-centered design',
+    id: 'responsive-builds',
+    title: 'Responsive from the first screen',
     description:
-      'Every layout decision is shaped around clarity, usability, and how real users move through the page.',
+      'Layouts are planned for real phones, tablets, and desktops instead of being patched after the desktop version.',
   },
   {
-    id: 'fast-delivery',
-    title: 'Fast and efficient delivery',
+    id: 'clear-interfaces',
+    title: 'Interfaces built for fast understanding',
     description:
-      'I work with focus, clear priorities, and practical execution so projects move forward without unnecessary delays.',
+      'I use hierarchy, spacing, and purposeful interaction to help users find the next action without friction.',
   },
   {
-    id: 'collaboration',
-    title: 'Excellent collaboration skills',
+    id: 'team-delivery',
+    title: 'Comfortable inside product teams',
     description:
-      'I collaborate well with designers, backend developers, teams, and AI tools to deliver stronger results.',
+      'I collaborate with designers, backend developers, and stakeholders to keep handoffs clear and delivery moving.',
   },
   {
-    id: 'real-value',
-    title: 'Passionate about real product value',
+    id: 'real-product-value',
+    title: 'Polish that supports the goal',
     description:
-      'I care about building products that are not only polished, but useful, clear, and valuable to the people using them.',
+      'The work is judged by useful outcomes — clearer enquiries, easier admin tasks, and a product people can trust.',
   },
 ]

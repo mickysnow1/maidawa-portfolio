@@ -23,7 +23,7 @@ export default function WhyMe() {
             Why Hire Me
           </h2>
           <p className={`reveal ${styles.sub}`}>
-            I focus on writing clean, clear, and scalable code, thriving as a collaborative team member to produce high-value products that go beyond first impressions.       
+            I bring design-to-code precision, responsive thinking, and practical collaboration to every frontend build — whether I am joining a team or delivering a focused freelance project.
           </p>
         </div>
 

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styles from './About.module.css'
 
 export default function About() {
@@ -7,11 +8,13 @@ export default function About() {
         <div className={styles.layout}>
           <div className={`reveal ${styles.photoColumn}`}>
             <div className={styles.photoFrame} aria-label="Michael Maidawa">
-              <img 
-                src="/images/professional.jpg" 
-                alt="Michael Maidawa" 
-                className={styles.photoImage} 
-                loading="lazy" 
+              <Image
+                src="/images/professional.jpg"
+                alt="Michael Maidawa"
+                width={1080}
+                height={1920}
+                sizes="(max-width: 900px) 100vw, 320px"
+                className={styles.photoImage}
               />
             </div>
           </div>
@@ -22,33 +25,31 @@ export default function About() {
             </div>
             
             <h2 id="about-heading" className={`reveal ${styles.title}`}>
-              Hi, I’m Michael — a Web Developer.
+              Hi, I’m Michael — a Frontend Developer.
             </h2>
 
             <div className={styles.body}>
               <p className="reveal">
-                I’m a Web Developer with a strong drive for building clean, scalable,
-                and functional web applications.
+                I’m a frontend developer with four years of practice building clean,
+                responsive, and useful web experiences.
               </p>
               <p className="reveal">
-                I build these websites using React, Next.js, and Tailwind CSS. I am
-                proficient in turning designs from Figma into responsive, accessible,
-                and performant code. Whether working on client projects or personal
-                initiatives, I prioritize user experience and clean code architecture.
+                I work across React, Next.js, TypeScript, Tailwind CSS, and Figma-to-code
+                implementation. I turn product direction into responsive, accessible,
+                and maintainable interfaces that are clear on every screen.
               </p>
               <p className="reveal">
-                I’m a strong team player who enjoys collaborating with designers,
-                backend developers, and AI tools to deliver high-quality products
-                efficiently. I’m a fast learner and always focused on writing
-                maintainable code.
+                I’m available for full-time frontend roles and freelance builds. I enjoy
+                working with designers, backend developers, and product teams to ship
+                polished work without losing sight of the people using it.
               </p>
             </div>
 
             <div className={styles.facts} aria-label="Quick facts">
               {[
-                ['Focus', 'React, Next.js, Tailwind CSS'],
-                ['Strength', 'Figma to responsive, accessible code'],
-                ['Collaboration', 'Designers, backend developers, and AI tools'],
+                ['Focus', 'React, Next.js, TypeScript'],
+                ['Strength', 'Figma to responsive, accessible UI'],
+                ['Availability', 'Full-time roles and freelance builds'],
               ].map(([label, value]) => (
                 <div key={label} className={`reveal ${styles.fact}`}>
                   <span>{label}</span>

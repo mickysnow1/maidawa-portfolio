@@ -5,7 +5,6 @@ import { ArrowRight, ArrowUpRight, Check } from '../../components/Icon/Icons'
 
 type SubmitStatus =
   | { status: 'idle' }
-  | { status: 'sending' }
   | { status: 'sent' }
 
 const initialForm: ContactFormValues = {
@@ -31,36 +30,28 @@ export default function Contact() {
     }, {})
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) {
       setErrors(errs)
       return
     }
-    setErrors({})
-    setSubmitState({ status: 'sending' })
 
-    try {
-      await fetch('https://formsubmit.co/ajax/mickymaidawa@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          project: form.project,
-          message: form.message,
-          _subject: 'New Contact Form Submission - Maidawa Portfolio'
-        })
-      })
-      setSubmitState({ status: 'sent' })
-    } catch (error) {
-      console.error(error)
-      setSubmitState({ status: 'sent' }) // Fail gracefully for the user
-    }
+    setErrors({})
+    const subject = form.project
+      ? `Frontend enquiry: ${form.project}`
+      : 'Frontend enquiry from Maidawa portfolio'
+    const body = [
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      `Project type: ${form.project || 'Not specified'}`,
+      '',
+      form.message,
+    ].join('\\n')
+
+    window.location.href = `mailto:mickymaidawa@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setSubmitState({ status: 'sent' })
   }
 
   const update = (field: keyof ContactFormValues, value: string) => {
@@ -98,7 +89,7 @@ export default function Contact() {
 
             <nav className={`${styles.socials} reveal`} aria-label="Social links">
               {[
-                { label: 'X (@yourafroguy)', href: 'https://x.com/yourafroguy' },
+                { label: 'X / @yourafroguy', href: 'https://x.com/yourafroguy' },
                 { label: 'GitHub',   href: 'https://github.com/mickymaidawa' },
               ].map((s) => (
                 <a
@@ -121,8 +112,8 @@ export default function Contact() {
             {submitState.status === 'sent' ? (
               <div className={styles.sentState} role="status" aria-live="polite">
                 <div className={styles.sentIcon} aria-hidden="true"><Check size={22} /></div>
-                <h3 className={styles.sentTitle}>Message Transmitted.</h3>
-                <p className={styles.sentSub}>I will review details and follow up within 24 hours.</p>
+                <h3 className={styles.sentTitle}>Email draft opened.</h3>
+                <p className={styles.sentSub}>Your message is ready in your mail app. If it did not open, email me directly at mickymaidawa@gmail.com.</p>
               </div>
             ) : (
               <form
@@ -155,7 +146,7 @@ export default function Contact() {
                 </div>
                 <Field
                   id="contact-project"
-                    label="Project Type"
+                    label="Work type"
                   type="text"
                   value={form.project}
                   onChange={(v) => update('project', v)}
@@ -163,7 +154,7 @@ export default function Contact() {
                 />
                 <Field
                   id="contact-message"
-                  label="Message Specification"
+                  label="Project details"
                   type="textarea"
                   value={form.message}
                   error={errors.message}
@@ -175,10 +166,9 @@ export default function Contact() {
                   <button
                     type="submit"
                     className={styles.submitBtn}
-                    disabled={submitState.status === 'sending'}
-                    aria-busy={submitState.status === 'sending'}
+
                   >
-                    <span>{submitState.status === 'sending' ? 'Transmitting…' : 'Send message'}</span>
+                    <span>Open email draft</span>
                     <span className="btn-icon-arrow"><ArrowRight size={15} /></span>
                   </button>
                 </div>
