@@ -4,6 +4,19 @@ import { ArrowRight } from '../../components/Icon/Icons'
 
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false)
+  const [cvOpen, setCvOpen] = useState(false)
+
+  useEffect(() => {
+    if (!cvOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setCvOpen(false) }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prev
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [cvOpen])
   const triggerRef = useRef<HTMLButtonElement>(null)
   const closeRef   = useRef<HTMLButtonElement>(null)
   const modalRef   = useRef<HTMLDivElement>(null)
@@ -83,9 +96,9 @@ export default function Hero() {
                 <span>View My Projects</span>
                 <span className="btn-icon-arrow"><ArrowRight size={15} /></span>
               </a>
-              <a href="/Michael_Maidawa_Resume.docx" download="Michael_Maidawa_Resume.docx" className="btn-pill-outline">
-                <span>Download CV</span>
-              </a>
+              <button type="button" className="btn-pill-outline" onClick={() => setCvOpen(true)} aria-haspopup="dialog">
+                <span>View CV</span>
+              </button>
             </div>
           </div>
 
@@ -165,6 +178,30 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {cvOpen && (
+        <div className={styles.modalOverlay} onClick={() => setCvOpen(false)}>
+          <div
+            className={styles.modalInner}
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cv-title"
+            style={{ maxWidth: '900px', width: '95%' }}
+          >
+            <div className={styles.modalHeader}>
+              <h2 id="cv-title" className={styles.modalTitle}>Curriculum Vitae</h2>
+              <button type="button" className={styles.modalClose} onClick={() => setCvOpen(false)} aria-label="Close CV">
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <line x1="8" y1="8" x2="24" y2="24" />
+                  <line x1="24" y1="8" x2="8" y2="24" />
+                </svg>
+              </button>
+            </div>
+            <iframe src="/resume.html" title="Michael Maidawa CV" style={{ width: '100%', height: '75vh', border: 0 }} />
+          </div>
+        </div>
+      )}
 
       {modalOpen && (
         <div className={styles.modalOverlay} onClick={() => setModalOpen(false)}>
