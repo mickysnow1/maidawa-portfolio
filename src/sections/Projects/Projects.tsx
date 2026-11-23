@@ -184,7 +184,6 @@ function ProjectCard({ project, index, onOpenLightbox }: { project: Project; ind
               {project.figmaUrl && (
                 <ProjectAction href={project.figmaUrl} label="Figma" />
               )}
-              {project.codeUrl && <ProjectAction href={project.codeUrl} label="GitHub" />}
             </div>
           </div>
         </div>
